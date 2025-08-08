@@ -1,0 +1,21 @@
+# Ignore Python cache and virtual environment
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+
+# Ignore environment variables
+.env
+
+# Ignore Telethon session file
+session.session
+
+# Ignore downloaded media files
+downloaded_media/
+
+# Ignore any logs you might add
+*.log
+
+# macOS and Windows system files (if working cross-platform)
+.DS_Store
+Thumbs.db
