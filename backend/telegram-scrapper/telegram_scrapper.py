@@ -23,9 +23,11 @@ db = mongo.telegram_db
 
 # Optional: Delay in seconds between processing each message (to avoid Telegram rate limits)
 DELAY_BETWEEN_MESSAGES = 0.1  # 100ms
+IMAGE_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp')
+MAX_POSTS = 400  # Limit to first 400 posts on first scrape
 
-def is_compressed_file(filename):
-    return filename.endswith((".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz"))
+def is_image_file(filename):
+    return filename.endswith(IMAGE_EXTENSIONS)
 
 with client:
     for channel in channels:
@@ -46,27 +48,38 @@ with client:
         for msg in messages:
             if not isinstance(msg, Message): continue
 
+            if total_scraped >= MAX_POSTS:
+                break
+
             media_path = None
 
             # If there is media
             if msg.media:
-                skip = False
+                skip = True # Default to skipping unless we find a valid image
 
-                # If it's a document with a filename
-                if msg.document:
+                if msg.photo:
+                    # Direct photo (Telegram handles as .jpg)
+                    file = client.download_media(msg, file=media_folder)
+                    if file and is_image_file(file.lower()):
+                        media_path = file
+                        skip = False
+
+                elif msg.document:
                     for attr in msg.document.attributes:
                         if hasattr(attr, "file_name"):
                             filename = attr.file_name.lower()
-                            if is_compressed_file(filename):
-                                print(f"⏩ Skipping compressed file: {filename}")
-                                skip = True
-                                break
-                if skip:
-                    continue
+                            if is_image_file(filename):
+                                file = client.download_media(msg, file=media_folder)
+                                if file:
+                                    media_path = file
+                                    skip = False
+                                break  # Stop checking attributes once filename is found
 
-                file = client.download_media(msg, file=media_folder)
-                if file:
-                    media_path = file
+                if skip:
+                    continue  # Skip non-image media
+
+            else:
+                continue  # Skip if no media
 
             # Insert into MongoDB
             db.posts.insert_one({
@@ -78,8 +91,8 @@ with client:
             })
 
             total_scraped += 1
-            if total_scraped % 100 == 0:
-                print(f"✅ Scraped {total_scraped} messages so far...")
+            if total_scraped % 20 == 0:
+                print(f"✅ Scraped {total_scraped} image posts...")
 
             time.sleep(DELAY_BETWEEN_MESSAGES)
 
