@@ -36,8 +36,8 @@ const Header = ({ classOption }) => {
                 }`}
             >
                 <div className="container-fluid">
-                    <div className="row align-items-center justify-content-between">
-                        <div className="col-auto">
+                    <div className="row align-items-center justify-content-center">
+                        {/* <div className="col-auto">
                             <div className="header-action-area">
                                 <button
                                     className="btn-menu"
@@ -49,7 +49,7 @@ const Header = ({ classOption }) => {
                                 </button>
                                 <span className="menu-text">Menu</span>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="col-auto">
                             <div className="header-logo-area">
@@ -59,9 +59,9 @@ const Header = ({ classOption }) => {
                             </div>
                         </div>
 
-                        <div className="col-auto">
+                        {/* <div className="col-auto">
                             <HeaderSearch onClick={onSearchHandler} />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </header>

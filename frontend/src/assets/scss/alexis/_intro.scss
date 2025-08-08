@@ -24,23 +24,23 @@
     z-index: 9;
     display: flex;
     align-items: center;
-    height: 845px;
+    height: 300px;
     padding: 50px 0;
     // Responsive
     @media #{$xxl-device} {
-        height: 600px;
+        height: 300px;
     }
     @media #{$lg-device} {
-        height: 500px;
+        height: 300px;
     }
     @media #{$md-device} {
-        height: 450px;
+        height: 300px;
     }
     @media #{$xs-device} {
-        height: 450px;
+        height: 300px;
     }
     @media #{$xxs-device} {
-        height: 400px;
+        height: 300px;
     }
 
     & .container {

@@ -15,7 +15,7 @@ const Intro = ({ data }) => {
                 alt="background"
                 style={{
                     width: "100%",
-                    height: "100vh",
+                    height: "50vh",
                     objectFit: "cover",
                     position: "absolute",
                     top: 0,
@@ -27,7 +27,7 @@ const Intro = ({ data }) => {
                 <div className="row row-cols-lg-1 row-cols-1">
                     <div className="col align-self-center">
                         <div className="intro-content">
-                            <span className="sub-title">{data.subTitle}</span>
+                            {/* <span className="sub-title">{data.subTitle}</span>
                             <h2 className="title">{data.title}</h2>
                             <div className="desc">
                                 <p>{data.desc}</p>
@@ -37,7 +37,7 @@ const Intro = ({ data }) => {
                                 className="intro-btn"
                             >
                                 {data.buttonText}
-                            </Link>
+                            </Link> */}
                         </div>
                     </div>
                 </div>
