@@ -24,7 +24,7 @@ db = mongo.telegram_db
 # Optional: Delay in seconds between processing each message (to avoid Telegram rate limits)
 DELAY_BETWEEN_MESSAGES = 0.1  # 100ms
 IMAGE_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp')
-MAX_POSTS = 400  # Limit to first 400 posts on first scrape
+MAX_POSTS = 30  # Limit to first 30 posts on first scrape
 
 def is_image_file(filename):
     return filename.endswith(IMAGE_EXTENSIONS)

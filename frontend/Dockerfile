@@ -11,6 +11,9 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
+# 👇 Fix OpenSSL issue for webpack/react-scripts
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 RUN yarn build
 
 # Stage 2: Serve with nginx
